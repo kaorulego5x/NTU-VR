@@ -10,6 +10,8 @@ public class VRInputModule : BaseInputModule
     public Camera camera;
     public SteamVR_Input_Sources TargetSource;
     public SteamVR_Action_Boolean ClickAction;
+    public GameObject leftController;
+    public GameObject rightController;
 
     private GameObject CurrentObject = null;
     private PointerEventData Data = null;
@@ -52,15 +54,21 @@ public class VRInputModule : BaseInputModule
 
         GameObject newPointerPress = ExecuteEvents.ExecuteHierarchy(CurrentObject, Data, ExecuteEvents.pointerDownHandler);
 
+        RaycastHit hit;
+
         if(newPointerPress == null){
             newPointerPress = ExecuteEvents.GetEventHandler<IPointerClickHandler>(CurrentObject);
 
             Data.pressPosition = data.position;
             Data.pointerPress = newPointerPress;
             Data.rawPointerPress = CurrentObject;
+
+            if (Physics.Raycast(rightController.transform.position, rightController.transform.direction, out hit)) {
+                print(hit.gameObject);
+            }
         }
 
-
+        
 
     }
 
