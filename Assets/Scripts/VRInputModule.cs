@@ -58,6 +58,7 @@ public class VRInputModule : BaseInputModule
             Data.pressPosition = data.position;
             Data.pointerPress = newPointerPress;
             Data.rawPointerPress = CurrentObject;
+            CurrentObject.active = false;
         }
 
 
