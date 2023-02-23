@@ -63,8 +63,8 @@ public class VRInputModule : BaseInputModule
             Data.pointerPress = newPointerPress;
             Data.rawPointerPress = CurrentObject;
 
-            if (Physics.Raycast(rightController.transform.position, rightController.transform.direction, out hit)) {
-                print(hit.gameObject);
+            if (Physics.Raycast(rightController.transform.position, rightController.transform.forward, out hit)) {
+                Debug.Log(hit.transform.gameObject);
             }
         }
 
