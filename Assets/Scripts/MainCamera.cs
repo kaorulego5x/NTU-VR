@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainCamera : MonoBehaviour
 {
-    public float speed;
+    public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,14 +14,7 @@ public class MainCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(0,0,speed*Time.deltaTime);   
+        transform.position = player.transform.position;   
     }
 
-    private void onTriggerEnter(Collider other) 
-    {
-        Debug.Log("hello");
-        if(other.CompareTag("Obstacle")) {
-            Destroy(other);
-        }
-    }
 }

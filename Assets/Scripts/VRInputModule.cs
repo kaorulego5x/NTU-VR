@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Valve.VR;
+using UnityEngine.SceneManagement;
 
 
 public class VRInputModule : BaseInputModule
@@ -15,6 +16,11 @@ public class VRInputModule : BaseInputModule
 
     private GameObject CurrentObject = null;
     private PointerEventData Data = null;
+
+    private void Start() {
+        leftController = GetComponent<GameObject>();
+        rightController = GetComponent<GameObject>();
+    }
 
     protected override void Awake()
     {
@@ -48,6 +54,14 @@ public class VRInputModule : BaseInputModule
         return Data;
     }
 
+    private void handleRayCastHit(GameObject hitObject) {
+        if (hitObject.CompareTag("Obstacle")) {
+            Destroy(hitObject);
+        } else if (hitObject.CompareTag("Start")) {
+            SceneManager.LoadScene("Hit");
+        }
+    }
+
     private void ProcessPress(PointerEventData data)
     {
         Data.pointerPressRaycast = data.pointerCurrentRaycast;
@@ -62,14 +76,15 @@ public class VRInputModule : BaseInputModule
             Data.pressPosition = data.position;
             Data.pointerPress = newPointerPress;
             Data.rawPointerPress = CurrentObject;
+            
+            if (Physics.Raycast(leftController.transform.position, leftController.transform.forward, out hit)) {
+                handleRayCastHit(hit.transform.gameObject);
+            }
 
             if (Physics.Raycast(rightController.transform.position, rightController.transform.forward, out hit)) {
-                Debug.Log(hit.transform.gameObject);
+                handleRayCastHit(hit.transform.gameObject);
             }
         }
-
-        
-
     }
 
     private void ProcessRelease(PointerEventData data)
