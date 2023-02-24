@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - Level
   - Start
+  - Goal
   layers:
   - Default
   - TransparentFX

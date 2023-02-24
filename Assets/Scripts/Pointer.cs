@@ -25,7 +25,7 @@ public class Pointer : MonoBehaviour
     private void UpdateLine()
     {   
         PointerEventData Data = inputModule.GetData();
-        float targetLength = Data.pointerCurrentRaycast.distance == 0 ? defaultlength : Data.pointerCurrentRaycast.distance;
+        float targetLength = defaultlength; //Data.pointerCurrentRaycast.distance == 0 ? defaultlength : Data.pointerCurrentRaycast.distance;
         RaycastHit hit = CreateRaycast(targetLength);
 
         Vector3 endPosition = transform.position + (transform.forward * targetLength);

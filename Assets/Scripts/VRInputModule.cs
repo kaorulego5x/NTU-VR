@@ -9,17 +9,16 @@ using UnityEngine.SceneManagement;
 public class VRInputModule : BaseInputModule
 {
     public Camera camera;
-    public SteamVR_Input_Sources TargetSource;
+    public SteamVR_Input_Sources LeftTargetSource;
+    public SteamVR_Input_Sources RightTargetSource;
     public SteamVR_Action_Boolean ClickAction;
-    public GameObject leftController;
-    public GameObject rightController;
+    public GameObject leftController = null;
+    public GameObject rightController = null;
 
     private GameObject CurrentObject = null;
     private PointerEventData Data = null;
 
     private void Start() {
-        leftController = GetComponent<GameObject>();
-        rightController = GetComponent<GameObject>();
     }
 
     protected override void Awake()
@@ -41,10 +40,16 @@ public class VRInputModule : BaseInputModule
         m_RaycastResultCache.Clear();
 
         HandlePointerExitAndEnter(Data, CurrentObject);
-        if(ClickAction.GetStateDown(TargetSource))
+        if(ClickAction.GetStateDown(LeftTargetSource))
             ProcessPress(Data);
 
-        if(ClickAction.GetStateUp(TargetSource))
+        if(ClickAction.GetStateUp(LeftTargetSource))
+            ProcessPress(Data);
+
+        if(ClickAction.GetStateDown(RightTargetSource))
+            ProcessPress(Data);
+
+        if(ClickAction.GetStateUp(RightTargetSource))
             ProcessPress(Data);
 
     }
@@ -65,7 +70,6 @@ public class VRInputModule : BaseInputModule
     private void ProcessPress(PointerEventData data)
     {
         Data.pointerPressRaycast = data.pointerCurrentRaycast;
-
         GameObject newPointerPress = ExecuteEvents.ExecuteHierarchy(CurrentObject, Data, ExecuteEvents.pointerDownHandler);
 
         RaycastHit hit;
@@ -77,11 +81,13 @@ public class VRInputModule : BaseInputModule
             Data.pointerPress = newPointerPress;
             Data.rawPointerPress = CurrentObject;
             
-            if (Physics.Raycast(leftController.transform.position, leftController.transform.forward, out hit)) {
+            if (Physics.Raycast(leftController.transform.position, leftController.transform.forward, out hit, 15.0f)) {
+                Debug.Log("left clicked");
+                Debug.Log(hit.transform.gameObject);
                 handleRayCastHit(hit.transform.gameObject);
             }
 
-            if (Physics.Raycast(rightController.transform.position, rightController.transform.forward, out hit)) {
+            if (Physics.Raycast(rightController.transform.position, rightController.transform.forward, out hit, 15.0f)) {
                 handleRayCastHit(hit.transform.gameObject);
             }
         }

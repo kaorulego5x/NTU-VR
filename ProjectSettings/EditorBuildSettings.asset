@@ -7,10 +7,10 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
-    guid: ceca84ef25af1a04d9cced221ee5d26c
+    guid: d1e60198512f24740a50c5eeb146e89e
   - enabled: 1
-    path: Assets/Scenes/ObstacleCourse.unity
-    guid: 5c445fab0ce561944897656950f9a2db
+    path: Assets/Scenes/Hit.unity
+    guid: 56798ffa13f2a437ea840f9bfd5f200d
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: b054865c775bd174eb02498335d5d0ab, type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 9fe07ed191e59cd45b87e5f59c3b2c55, type: 2}

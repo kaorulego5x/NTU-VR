@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -35,7 +36,10 @@ public class Player : MonoBehaviour
     {
         speed = 0;
         Debug.Log("Game Over");
+        SceneManager.LoadScene("MainMenu");
     }
+
+
 
     private void HandleCollision()
     {
@@ -44,7 +48,7 @@ public class Player : MonoBehaviour
         Debug.Log("HP" + hp.ToString());
         SetHPCount();
         if(hp == 0) {
-            // HandleGameOver();
+            HandleGameOver();
         }
     }
 
@@ -75,6 +79,9 @@ public class Player : MonoBehaviour
         }
         if(other.CompareTag("Level")) {
             HandleLevelUp();
+        }
+        if(other.CompareTag("Goal")) {
+            speed = 0;
         }
     }
 }
